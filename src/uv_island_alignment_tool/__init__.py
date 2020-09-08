@@ -25,7 +25,7 @@ bl_info = {
     "warning": "",
     "support": "TESTING",
     "wiki_url": "",
-    "tracker_url": "",
+    "tracker_url": "https://github.com/samia-done/UV-Island-Alignment-Tool",
     "category": "UV"
 }
 
