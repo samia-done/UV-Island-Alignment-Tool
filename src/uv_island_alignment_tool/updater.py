@@ -142,7 +142,7 @@ def draw_updater_ui(prefs_obj):
 def register_updater(bl_info):
     pass
     config = AddonUpdaterConfig()
-    config.owner = UVIA.name
+    config.owner = UVIA.owner
     config.repository = UVIA.repository
     config.current_addon_path = os.path.dirname(os.path.realpath(__file__))
     # config.branches = ["master", "develop"]
