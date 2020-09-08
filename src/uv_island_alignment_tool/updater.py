@@ -39,9 +39,7 @@ from .utils.addon_updater import (
 from .utils.bl_anotations import make_annotations
 
 
-@staticmethod
-class UVIA(bpy.types.Operator):
-    add_on_name = 'UV-Island-Alignment-Tool'
+class GitSettings:
     owner = "samia-done"
     repository = "UV-Island-Alignment-Tool"
     branches = ["master"]
@@ -49,6 +47,7 @@ class UVIA(bpy.types.Operator):
     target_addon_path = {
         "master": "src{}uv_island_alignment_tool".format(get_separator())
     }
+    update_text = 'Check "UV-Island-Alignment-Tool" add-on update'
 
 
 @BlClassRegistry()
@@ -92,20 +91,19 @@ def draw_updater_ui(prefs_obj):
 
     layout.separator()
 
-    text = "Check " + UVIA.add_on_name + "add-on update"
     if not updater.candidate_checked():
         col = layout.column()
         col.scale_y = 2
         row = col.row()
         row.operator(UVIA_OT_CheckAddonUpdate.bl_idname,
-                     text=text,
+                     text=GitSettings.update_text,
                      icon='FILE_REFRESH')
     else:
         row = layout.row(align=True)
         row.scale_y = 2
         col = row.column()
         col.operator(UVIA_OT_CheckAddonUpdate.bl_idname,
-                     text=text,
+                     text=GitSettings.update_text,
                      icon='FILE_REFRESH')
         col = row.column()
         if updater.latest_version() != "":
@@ -142,16 +140,15 @@ def draw_updater_ui(prefs_obj):
 def register_updater(bl_info):
     pass
     config = AddonUpdaterConfig()
-    config.owner = UVIA.owner
-    config.repository = UVIA.repository
+    config.owner = GitSettings.owner
+    config.repository = GitSettings.repository
     config.current_addon_path = os.path.dirname(os.path.realpath(__file__))
-    # config.branches = ["master", "develop"]
-    config.branches = UVIA.branches
+    config.branches = GitSettings.branches
     config.addon_directory = \
         config.current_addon_path[
             :config.current_addon_path.rfind(get_separator())]
     config.min_release_version = bl_info["version"]
-    config.default_target_addon_path = UVIA.default_target_addon_path
-    config.target_addon_path = UVIA.target_addon_path
+    config.default_target_addon_path = GitSettings.default_target_addon_path
+    config.target_addon_path = GitSettings.target_addon_path
     updater = AddonUpdaterManager.get_instance()
     updater.init(bl_info, config)

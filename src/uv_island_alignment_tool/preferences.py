@@ -31,5 +31,5 @@ class UVIA_AddonPreferences(AddonPreferences):
 
     def draw(self, context):
         layout = self.layout
-        layout.label(text="UVIA Settings")
+        layout.label(text="GitSettings Settings")
         updater.draw_updater_ui(self)
