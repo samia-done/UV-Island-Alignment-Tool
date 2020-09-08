@@ -5,10 +5,14 @@ import codecs
 import csv
 
 if "bpy" in locals():
-    import imp
-    imp.reload(operator)
+    import importlib
+    importlib.reload(operator)
+    importlib.reload(updater)
+    importlib.reload(addon_prefeerences)
 else:
     from . import operator
+    from . import updater
+    from . import addon_prefeerences
 
 import bpy
 
@@ -27,12 +31,15 @@ bl_info = {
 }
 
 classes = (
+    updater.MUV_OT_CheckAddonUpdate,
+    updater.MUV_OT_UpdateAddon,
+    addon_prefeerences.UVIA_AddonPreferences,
     operator.UVIA_ToolSettings,
     operator.UV_OT_uv_island_alignment,
     operator.UV_OT_uv_island_distribute_spacing,
     operator.UV_OT_uv_island_distribute_scaling,
     operator.UV_OT_reset_2d_cursor,
-    operator.IMAGE_PT_uv_island_aligment,
+    operator.IMAGE_PT_uv_island_aligment
 )
 
 
