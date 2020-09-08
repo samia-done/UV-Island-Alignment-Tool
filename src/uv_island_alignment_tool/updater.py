@@ -39,6 +39,18 @@ from .utils.addon_updater import (
 from .utils.bl_anotations import make_annotations
 
 
+@staticmethod
+class UVIA(bpy.types.Operator):
+    add_on_name = 'UV-Island-Alignment-Tool'
+    owner = "samia-done"
+    repository = "UV-Island-Alignment-Tool"
+    branches = ["master"]
+    default_target_addon_path = "uv_island_alignment_tool"
+    target_addon_path = {
+        "master": "src{}uv_island_alignment_tool".format(get_separator())
+    }
+
+
 @BlClassRegistry()
 class UVIA_OT_CheckAddonUpdate(bpy.types.Operator):
     bl_idname = "uv.uvia_check_addon_update"
@@ -79,21 +91,21 @@ def draw_updater_ui(prefs_obj):
     updater = AddonUpdaterManager.get_instance()
 
     layout.separator()
-    add_on_update_text = "Check 'UV-Island-Alignment-Tool' add-on update"
 
+    text = "Check " + UVIA.add_on_name + "add-on update"
     if not updater.candidate_checked():
         col = layout.column()
         col.scale_y = 2
         row = col.row()
         row.operator(UVIA_OT_CheckAddonUpdate.bl_idname,
-                     text=add_on_update_text,
+                     text=text,
                      icon='FILE_REFRESH')
     else:
         row = layout.row(align=True)
         row.scale_y = 2
         col = row.column()
         col.operator(UVIA_OT_CheckAddonUpdate.bl_idname,
-                     text=add_on_update_text,
+                     text=text,
                      icon='FILE_REFRESH')
         col = row.column()
         if updater.latest_version() != "":
@@ -130,18 +142,16 @@ def draw_updater_ui(prefs_obj):
 def register_updater(bl_info):
     pass
     config = AddonUpdaterConfig()
-    config.owner = "samia-done"
-    config.repository = "UV-Island-Alignment-Tool"
+    config.owner = UVIA.name
+    config.repository = UVIA.repository
     config.current_addon_path = os.path.dirname(os.path.realpath(__file__))
-    config.branches = ["master", "develop"]
+    # config.branches = ["master", "develop"]
+    config.branches = UVIA.branches
     config.addon_directory = \
         config.current_addon_path[
             :config.current_addon_path.rfind(get_separator())]
     config.min_release_version = bl_info["version"]
-    config.default_target_addon_path = "uv_island_alignment_tool"
-    config.target_addon_path = {
-        "master": "src{}uv_island_alignment_tool".format(get_separator()),
-        "develop": "src{}uv_island_alignment_tool".format(get_separator()),
-    }
+    config.default_target_addon_path = UVIA.default_target_addon_path
+    config.target_addon_path = UVIA.target_addon_path
     updater = AddonUpdaterManager.get_instance()
     updater.init(bl_info, config)
