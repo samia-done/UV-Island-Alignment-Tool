@@ -40,7 +40,7 @@ from .utils.bl_anotations import make_annotations
 
 
 @BlClassRegistry()
-class MUV_OT_CheckAddonUpdate(bpy.types.Operator):
+class UVIA_OT_CheckAddonUpdate(bpy.types.Operator):
     bl_idname = "uv.uvia_check_addon_update"
     bl_label = "Check Update"
     bl_description = "Check Add-on Update"
@@ -55,7 +55,7 @@ class MUV_OT_CheckAddonUpdate(bpy.types.Operator):
 
 @BlClassRegistry()
 @make_annotations
-class MUV_OT_UpdateAddon(bpy.types.Operator):
+class UVIA_OT_UpdateAddon(bpy.types.Operator):
     bl_idname = "uv.uvia_update_addon"
     bl_label = "Update"
     bl_description = "Update Add-on"
@@ -85,28 +85,28 @@ def draw_updater_ui(prefs_obj):
         col = layout.column()
         col.scale_y = 2
         row = col.row()
-        row.operator(MUV_OT_CheckAddonUpdate.bl_idname,
+        row.operator(UVIA_OT_CheckAddonUpdate.bl_idname,
                      text=add_on_update_text,
                      icon='FILE_REFRESH')
     else:
         row = layout.row(align=True)
         row.scale_y = 2
         col = row.column()
-        col.operator(MUV_OT_CheckAddonUpdate.bl_idname,
+        col.operator(UVIA_OT_CheckAddonUpdate.bl_idname,
                      text=add_on_update_text,
                      icon='FILE_REFRESH')
         col = row.column()
         if updater.latest_version() != "":
             col.enabled = True
             ops = col.operator(
-                MUV_OT_UpdateAddon.bl_idname,
+                UVIA_OT_UpdateAddon.bl_idname,
                 text="Update to the latest release version (version: {})"
                 .format(updater.latest_version()),
                 icon='TRIA_DOWN_BAR')
             ops.branch_name = updater.latest_version()
         else:
             col.enabled = False
-            col.operator(MUV_OT_UpdateAddon.bl_idname,
+            col.operator(UVIA_OT_UpdateAddon.bl_idname,
                          text="No updates are available.")
 
         layout.separator()
@@ -114,7 +114,7 @@ def draw_updater_ui(prefs_obj):
         row = layout.row(align=True)
         row.prop(prefs_obj, "updater_branch_to_update", text="Target")
         ops = row.operator(
-            MUV_OT_UpdateAddon.bl_idname, text="Update",
+            UVIA_OT_UpdateAddon.bl_idname, text="Update",
             icon='TRIA_DOWN_BAR')
         ops.branch_name = prefs_obj.updater_branch_to_update
 
@@ -128,6 +128,7 @@ def draw_updater_ui(prefs_obj):
 
 
 def register_updater(bl_info):
+    pass
     config = AddonUpdaterConfig()
     config.owner = "samia-done"
     config.repository = "UV-Island-Alignment-Tool"

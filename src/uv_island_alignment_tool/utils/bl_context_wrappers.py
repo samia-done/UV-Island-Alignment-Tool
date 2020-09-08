@@ -2,6 +2,12 @@
 import bpy
 
 
+def get_user_preferences(context):
+    if hasattr(context, "user_preferences"):
+        return context.user_preferences
+    return context.preferences
+
+
 def get_engine(context):
     if hasattr(context, "scene"):
         return context.scene.render.engine

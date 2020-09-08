@@ -25,8 +25,6 @@ __date__ = "10 Aug 2020"
 
 import bpy
 
-from .. import common
-
 
 class BlClassRegistry:
     class_list = []
@@ -63,23 +61,23 @@ class BlClassRegistry:
             "legacy": legacy,
         }
         cls.class_list.append(new_op)
-        common.debug_print("{} is registered.".format(bl_idname))
+        # common.debug_print("{} is registered.".format(bl_idname))
 
     @classmethod
     def register(cls):
         for class_ in cls.class_list:
             bpy.utils.register_class(class_["class"])
-            common.debug_print("{} is registered to Blender."
-                               .format(class_["bl_idname"]))
+            # common.debug_print("{} is registered to Blender."
+            #                    .format(class_["bl_idname"]))
 
     @classmethod
     def unregister(cls):
         for class_ in cls.class_list:
             bpy.utils.unregister_class(class_["class"])
-            common.debug_print("{} is unregistered from Blender."
-                               .format(class_["bl_idname"]))
+            # common.debug_print("{} is unregistered from Blender."
+            #                    .format(class_["bl_idname"]))
 
     @classmethod
     def cleanup(cls):
         cls.class_list = []
-        common.debug_print("Cleanup registry.")
+        # common.debug_print("Cleanup registry.")

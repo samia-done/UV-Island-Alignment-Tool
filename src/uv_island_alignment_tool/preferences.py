@@ -2,11 +2,9 @@
 
 import bpy
 from bpy.types import AddonPreferences
-from .utils.bl_anotations import make_annotations
-from .utils.addon_updater import (
-    AddonUpdaterManager,
-)
+from .utils.addon_updater import AddonUpdaterManager
 from . import updater
+from .utils.bl_anotations import make_annotations
 
 
 def get_update_candidate_branches(_, __):
@@ -33,5 +31,5 @@ class UVIA_AddonPreferences(AddonPreferences):
 
     def draw(self, context):
         layout = self.layout
-        layout.label(text="")
+        layout.label(text="UVIA Settings")
         updater.draw_updater_ui(self)

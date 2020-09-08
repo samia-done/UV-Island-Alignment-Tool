@@ -7,13 +7,12 @@ import csv
 if "bpy" in locals():
     import importlib
     importlib.reload(operator)
+    importlib.reload(preferences)
     importlib.reload(updater)
-    importlib.reload(addon_prefeerences)
 else:
     from . import operator
+    from . import preferences
     from . import updater
-    from . import addon_prefeerences
-
 import bpy
 
 bl_info = {
@@ -31,15 +30,15 @@ bl_info = {
 }
 
 classes = (
-    updater.MUV_OT_CheckAddonUpdate,
-    updater.MUV_OT_UpdateAddon,
-    addon_prefeerences.UVIA_AddonPreferences,
+    preferences.UVIA_AddonPreferences,
+    updater.UVIA_OT_CheckAddonUpdate,
+    updater.UVIA_OT_UpdateAddon,
     operator.UVIA_ToolSettings,
     operator.UV_OT_uv_island_alignment,
     operator.UV_OT_uv_island_distribute_spacing,
     operator.UV_OT_uv_island_distribute_scaling,
     operator.UV_OT_reset_2d_cursor,
-    operator.IMAGE_PT_uv_island_aligment
+    operator.IMAGE_PT_uv_island_aligment,
 )
 
 
@@ -67,9 +66,13 @@ def get_translation_dict():
 
 
 def register():
+    updater.register_updater(bl_info)
+
     for cls in classes:
         bpy.utils.register_class(cls)
     bpy.types.Scene.UVIA_tool_settings = bpy.props.PointerProperty(type=operator.UVIA_ToolSettings)
+    print(__package__)
+    # user_prefs = bl_context_wrappers.get_user_preferences(bpy.context)
 
     _translation_dict = get_translation_dict()
     bpy.app.translations.register(__name__, _translation_dict)
