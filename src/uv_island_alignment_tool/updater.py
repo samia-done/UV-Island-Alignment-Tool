@@ -79,7 +79,7 @@ def draw_updater_ui(prefs_obj):
     updater = AddonUpdaterManager.get_instance()
 
     layout.separator()
-    add_on_update_text = "Check 'Magic UV' add-on update"
+    add_on_update_text = "Check 'UV-Island-Alignment-Tool' add-on update"
 
     if not updater.candidate_checked():
         col = layout.column()
@@ -130,17 +130,17 @@ def draw_updater_ui(prefs_obj):
 def register_updater(bl_info):
     config = AddonUpdaterConfig()
     config.owner = "samia-done"
-    config.repository = "UV-Island-Alignment-Tools"
+    config.repository = "UV-Island-Alignment-Tool"
     config.current_addon_path = os.path.dirname(os.path.realpath(__file__))
     config.branches = ["master", "develop"]
     config.addon_directory = \
         config.current_addon_path[
             :config.current_addon_path.rfind(get_separator())]
     config.min_release_version = bl_info["version"]
-    config.default_target_addon_path = "uv_island_alignment_tools"
+    config.default_target_addon_path = "uv_island_alignment_tool"
     config.target_addon_path = {
-        "master": "src{}uv_island_alignment_tools".format(get_separator()),
-        "develop": "src{}uv_island_alignment_tools".format(get_separator()),
+        "master": "src{}uv_island_alignment_tool".format(get_separator()),
+        "develop": "src{}uv_island_alignment_tool".format(get_separator()),
     }
     updater = AddonUpdaterManager.get_instance()
     updater.init(bl_info, config)
