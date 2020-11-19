@@ -18,7 +18,7 @@ import bpy
 bl_info = {
     "name": "UV Island Alignment Tool",
     "author": "Samia",
-    "version": (1, 0),
+    "version": (1, 1),
     "blender": (2, 80, 0),
     "location": "",
     "description": "",
